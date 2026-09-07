@@ -21,8 +21,14 @@ interface ImportMetaEnv {
   readonly VITE_APP_PROXY_PREFIX: string
   /** 后端是否有统一前缀 /api */
   readonly VITE_SERVER_HAS_API_PREFIX: 'true' | 'false'
-  /** 认证模式，'single' | 'double' ==> 单token | 双token */
-  readonly VITE_AUTH_MODE: 'single' | 'double'
+  /** 租户运行模式；未配置时保持 single 兼容 */
+  readonly VITE_TENANT_MODE?: 'single' | 'hosted'
+  /** hosted 登录定位方式；未配置时使用 code */
+  readonly VITE_TENANT_LOCATOR?: 'code' | 'host'
+  /** 微信各发布环境可覆盖 API 域名；未配置时回退 VITE_SERVER_BASEURL */
+  readonly VITE_SERVER_BASEURL_WEIXIN_DEVELOP?: string
+  readonly VITE_SERVER_BASEURL_WEIXIN_TRIAL?: string
+  readonly VITE_SERVER_BASEURL_WEIXIN_RELEASE?: string
   /** 是否清除console */
   readonly VITE_DELETE_CONSOLE: string
   // 更多环境变量...

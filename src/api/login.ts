@@ -1,13 +1,12 @@
-import type { IAuthLoginRes, ICaptcha, IDoubleTokenRes, IUpdateInfo, IUpdatePassword, IUserInfoRes } from './types/login'
+import type { IAuthLoginRes, ICaptcha, IUpdateInfo, IUpdatePassword, IUserInfoRes } from './types/login'
+import type { TenantLoginPayload } from '@/utils/tenant-auth'
 import { http } from '@/http/http'
+import { buildLoginPayload } from '@/utils/tenant-auth'
 
 /**
  * 登录表单
  */
-export interface ILoginForm {
-  username: string
-  password: string
-}
+export type ILoginForm = TenantLoginPayload
 
 /**
  * 获取验证码
@@ -22,7 +21,10 @@ export function getCode() {
  * @param loginForm 登录表单
  */
 export function login(loginForm: ILoginForm) {
-  return http.post<IAuthLoginRes>('/auth/login', loginForm)
+  return http.post<IAuthLoginRes>(
+    '/auth/login',
+    buildLoginPayload(loginForm.userName, loginForm.password, loginForm.tenantCode),
+  )
 }
 
 /**
@@ -30,21 +32,21 @@ export function login(loginForm: ILoginForm) {
  * @param refreshToken 刷新token
  */
 export function refreshToken(refreshToken: string) {
-  return http.post<IDoubleTokenRes>('/auth/refreshToken', { refreshToken })
+  return http.post<IAuthLoginRes>('/auth/refreshToken', { refreshToken })
 }
 
 /**
  * 获取用户信息
  */
 export function getUserInfo() {
-  return http.get<IUserInfoRes>('/user/info')
+  return http.get<IUserInfoRes>('/auth/getUserInfo')
 }
 
 /**
  * 退出登录
  */
-export function logout() {
-  return http.get<void>('/auth/logout')
+export function logout(refreshToken: string) {
+  return http.post<void>('/auth/logout', { refreshToken })
 }
 
 /**

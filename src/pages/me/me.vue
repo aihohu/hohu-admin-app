@@ -59,7 +59,7 @@ function handleLogout() {
 <template>
   <view class="profile-container">
     <view class="mt-3 break-all px-3 text-center text-green-500">
-      {{ userInfo.username ? '已登录' : '未登录' }}
+      {{ userInfo.userName ? '已登录' : '未登录' }}
     </view>
     <view class="mt-3 break-all px-3">
       {{ JSON.stringify(userInfo, null, 2) }}

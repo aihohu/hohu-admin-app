@@ -60,6 +60,10 @@ export default defineConfig(({ command, mode }) => {
   } = env
   console.log('环境变量 env -> ', env)
 
+  if (mode === 'production' && UNI_PLATFORM !== 'h5' && !VITE_SERVER_BASEURL) {
+    throw new Error('Non-H5 production builds require VITE_SERVER_BASEURL')
+  }
+
   return defineConfig({
     envDir: './env', // 自定义env目录
     base: VITE_APP_PUBLIC_BASE,
