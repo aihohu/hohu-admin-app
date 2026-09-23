@@ -12,7 +12,7 @@
     "email": "hohu@hohu.org",
     "github": "https://github.com/aihohu"
   },
-  "license": "MIT",
+  "license": "Apache-2.0",
   "homepage": "https://hohu.org",
   "repository": "https://github.com/aihohu/hohu-admin-app",
   "bugs": {
